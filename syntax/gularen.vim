@@ -42,15 +42,14 @@ syn match gularenBlockquote "/\%(\s\|$\)" contained nextgroup=@gularenBlock
 
 syn region gularenCodeBlock start="^\n\( \{4,}\|\t\)" end="^\ze \{,3}\S.*$" keepend
 
-syn match gularenListMarker "\%(\t\| \{0,4\}\)\*\%(\s\+\S\)\@=" contained
-syn match gularenOrderedListMarker "\%(\t\| \{0,4}\)\<\d\+\.\%(\s\+\S\)\@=" contained
-syn match gularenOrderedListMarker "\%(\t\| \{0,4}\)\.\.\%(\s\+\S\)\@=" contained
+syn match gularenListMarker "\%( \{,}\)\*\%(\s\+\S\)\@=" contained
+syn match gularenOrderedListMarker "\%( \{,}\)\<\d\+\.\%(\s\+\S\)\@=" contained
+syn match gularenOrderedListMarker "\%( \{,}\)\.\.\%(\s\+\S\)\@=" contained
 syn match gularenTaskListMarkerDone contained "v"
 syn match gularenTaskListMarkerCanceled contained "x"
 syn match gularenTaskListMarker "\%(\t\| \{0,4\}\)\[\( \|v\|x\)\]\%(\s\+\S\)\@=" contains=gularenTaskListMarkerDone,gularenTaskListMarkerCanceled
 
-syn match gularenRule "\* *\* *\*[ *]*$" contained
-syn match gularenRule "- *- *-[ -]*$" contained
+syn match gularenRule "\*\*\*$" contained
 
 syn match gularenLineBreak " \{2,\}$"
 
