@@ -39,10 +39,11 @@ syn match gularenSubsection "^\t*>[^>].*$"  contains=@gularenInline skipnl nextg
 syn match gularenListMarker "^\t*-[^-]"  contains=@gularenInline
 syn match gularenListMarker "^\t*\d\+\." contains=@gularenInline
 
-syn match gularenCheckListMarkerDone      contained "v"
-syn match gularenCheckListMarkerCancelled contained "x"
+syn match gularenCheckListMarkerDone      "v" contained containedin=gularenCheckListMarker
+syn match gularenCheckListMarkerCancelled "x" contained containedin=gularenCheckListMarker
 
-syn match gularenCheckListMarker "^\t*\[[vx ]\]" contains=@gularenInline,gularenCheckListMarkerDone,gularenCheckListMarkerCancelled
+syn match gularenCheckListMarker "\v(^\t*\[[vx ]\])"
+syn match gularenCheckList "\v(^\t*\[[vx ]\])@<=.*$" contains=@gularenInline
 
 syn match gularenCodeMarker "^\t*-\{3,} [a-z-]\+$" contained
 syn match gularenCodeMarker "^\t*-\{3,}$"          contained
