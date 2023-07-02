@@ -28,12 +28,13 @@ syn match gularenResource "[!?]\?\[[^\]]\+\]\(([^)]\+)\)\?" contains=gularenReso
 syn match gularenFootnoteJumpMarker "\^\[[a-z0-9-]\+\]" contains=gularenSymbol
 syn match gularenFootnoteDescribeMarker "^\t*=\[[a-z0-9-]\+\]" contains=gularenSymbol
 
-syn cluster gularenInline contains=gularenComment,gularenFSBold,gularenFSItalic,gularenFSMonospace,gularenNumber,gularenBreak
+syn cluster gularenInline contains=gularenComment,gularenFSBold,gularenFSItalic,gularenFSMonospace,gularenNumber,gularenBreak,gularenResource,gularenFootnoteJumpMarker
 
 " Blocks
-syn match gularenChapter    "^\t*>>>.*$"    contains=@gularenInline
-syn match gularenSection    "^\t*>>[^>].*$" contains=@gularenInline
-syn match gularenSubsection "^\t*>[^>].*$"  contains=@gularenInline
+syn match gularenSubtitle   "^\t*>[^>].*$"  contained
+syn match gularenChapter    "^\t*>>>.*$"    contains=@gularenInline skipnl nextgroup=gularenSubtitle
+syn match gularenSection    "^\t*>>[^>].*$" contains=@gularenInline skipnl nextgroup=gularenSubtitle
+syn match gularenSubsection "^\t*>[^>].*$"  contains=@gularenInline skipnl nextgroup=gularenSubtitle
 
 syn match gularenListMarker "^\t*-[^-]"  contains=@gularenInline
 syn match gularenListMarker "^\t*\d\+\." contains=@gularenInline
@@ -62,6 +63,7 @@ hi def link gularenComment Comment
 hi def link gularenChapter    htmlH1
 hi def link gularenSection    htmlH2
 hi def link gularenSubsection htmlH3
+hi def link gularenSubtitle   Delimiter
 
 hi def link gularenBreak DiffRemoved
 
