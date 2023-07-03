@@ -31,30 +31,36 @@ syn match gularenFootnoteDescribeMarker "^\t*=\[[a-z0-9-]\+\]" contains=gularenS
 syn cluster gularenInline contains=gularenComment,gularenFSBold,gularenFSItalic,gularenFSMonospace,gularenNumber,gularenBreak,gularenResource,gularenFootnoteJumpMarker
 
 " Blocks
-syn match gularenSubtitle   "^\t*>[^>].*$"  contained
-syn match gularenChapter    "^\t*>>>.*$"    contains=@gularenInline skipnl nextgroup=gularenSubtitle
-syn match gularenSection    "^\t*>>[^>].*$" contains=@gularenInline skipnl nextgroup=gularenSubtitle
-syn match gularenSubsection "^\t*>[^>].*$"  contains=@gularenInline skipnl nextgroup=gularenSubtitle
+syn match gularenSubtitle   "^\t*> [^>].*$"  contained
+syn match gularenChapter    "^\t*>>> .*$"    contains=@gularenInline skipnl nextgroup=gularenSubtitle
+syn match gularenSection    "^\t*>> [^>].*$" contains=@gularenInline skipnl nextgroup=gularenSubtitle
+syn match gularenSubsection "^\t*> [^>].*$"  contains=@gularenInline skipnl nextgroup=gularenSubtitle
 
-syn match gularenListMarker "^\t*-[^-]"  contains=@gularenInline
-syn match gularenListMarker "^\t*\d\+\." contains=@gularenInline
+syn match gularenListMarker "^\t*- "  contains=@gularenInline
+syn match gularenListMarker "^\t*\d\+\. " contains=@gularenInline
+syn match gularenListMarker "^\t*\.\." contains=@gularenInline
 
 syn match gularenCheckListMarkerDone      "v" contained containedin=gularenCheckListMarker
 syn match gularenCheckListMarkerCancelled "x" contained containedin=gularenCheckListMarker
 
-syn match gularenCheckListMarker "\v(^\t*\[[vx ]\])"
-syn match gularenCheckList "\v(^\t*\[[vx ]\])@<=.*$" contains=@gularenInline
+syn match gularenCheckListMarker "\v(^\t*\[[vx ]\] )"
+syn match gularenCheckList "\v(^\t*\[[vx ]\] )@<=.*$" contains=@gularenInline
 
 syn match gularenCodeMarker "^\t*-\{3,} [a-z-]\+$" contained
 syn match gularenCodeMarker "^\t*-\{3,}$"          contained
-syn region gularenCode start="^\t*\z(-\{3,}\).*$" end="^\s*\z1\ze\s*$" keepend contains=gularenCodeMarker
+syn region gularenCode start="^\t*\z(-\{3,}\)\n.*$" end="^\s*\z1\ze\s*$" keepend contains=gularenCodeMarker
+syn region gularenCode start="^\t*\z(-\{3,}\) [a-z-]\+\n.*$" end="^\s*\z1\ze\s*$" keepend contains=gularenCodeMarker
 
 syn match gularenPipe "|" contained
 syn match gularenPipeConnector "---\+" contained
 syn match gularenPipeConnector "--\+:" contained
 syn match gularenPipeConnector ":-\+:" contained
 syn match gularenPipeConnector ":--\+" contained
-syn match gularenTable "^\t*|.*|$" contains=@gularenInline,gularenPipe,gularenPipeConnector
+syn match gularenTable "^\t*| .* |$" contains=@gularenInline,gularenPipe,gularenPipeConnector
+syn match gularenTable "^\t*|-.*-|$" contains=@gularenInline,gularenPipe,gularenPipeConnector
+syn match gularenTable "^\t*|-.*:|$" contains=@gularenInline,gularenPipe,gularenPipeConnector
+syn match gularenTable "^\t*|:.*:|$" contains=@gularenInline,gularenPipe,gularenPipeConnector
+syn match gularenTable "^\t*|:.*-|$" contains=@gularenInline,gularenPipe,gularenPipeConnector
 
 " Linkages
 hi def link gularenNumber Number
