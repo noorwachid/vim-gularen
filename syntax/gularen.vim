@@ -20,6 +20,7 @@ syn match gularenNumber "-*\d\+"
 syn match gularenNumber "-*\d\+\.\d\+"
 
 syn match gularenBreak "<\{1,2}"
+syn match gularenBreak "^\s*\*\*\*$"
 
 syn match gularenSymbol "[a-z0-9-]" contained
 syn match gularenResourceValue "\v(\[)@<=[^\]]+(\])@=" contained
@@ -36,9 +37,8 @@ syn match gularenChapter    "^\t*>>> .*$"    contains=@gularenInline skipnl next
 syn match gularenSection    "^\t*>> [^>].*$" contains=@gularenInline skipnl nextgroup=gularenSubtitle
 syn match gularenSubsection "^\t*> [^>].*$"  contains=@gularenInline skipnl nextgroup=gularenSubtitle
 
-syn match gularenListMarker "^\t*- "  contains=@gularenInline
-syn match gularenListMarker "^\t*\d\+\. " contains=@gularenInline
-syn match gularenListMarker "^\t*\.\." contains=@gularenInline
+syn match gularenListMarker "\v(^\t*(\d+\.|-) )"
+syn match gularenList "\v(^\t*(\d+\.|-) )@<=.*$" contains=@gularenInline
 
 syn match gularenCheckListMarkerDone      "v" contained containedin=gularenCheckListMarker
 syn match gularenCheckListMarkerCancelled "x" contained containedin=gularenCheckListMarker
