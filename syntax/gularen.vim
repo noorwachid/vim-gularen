@@ -7,8 +7,6 @@ if exists("b:current_syntax")
   finish
 endif
 
-runtime! syntax/html.vim
-
 " Inlines
 syn match gularenComment "\~.*$" 
 
@@ -18,6 +16,13 @@ syn region gularenFSMonospace start="`" end="`"
 
 syn match gularenNumber "-*\d\+"
 syn match gularenNumber "-*\d\+\.\d\+"
+
+syn match gularenAdmonNote      "^\t*<\/> " containedin=ALL
+syn match gularenAdmonHint      "^\t*<?> "  containedin=ALL
+syn match gularenAdmonImportant "^\t*<!> "  containedin=ALL
+syn match gularenAdmonWarning   "^\t*<^> "  containedin=ALL
+syn match gularenAdmonDanger    "^\t*<@> "  containedin=ALL
+syn match gularenAdmonSeeAlso   "^\t*<&> "  containedin=ALL
 
 syn match gularenBreak "<\{1,2}"
 syn match gularenBreak "^\s*\*\*\*$"
@@ -95,5 +100,12 @@ hi def link gularenResourceValue          Underlined
 hi def link gularenResourceLabel          String
 hi def link gularenFootnoteJumpMarker     Delimiter
 hi def link gularenFootnoteDescribeMarker Delimiter
+
+hi def link gularenAdmonNote      htmlH1
+hi def link gularenAdmonHint      DiagnosticHint
+hi def link gularenAdmonImportant htmlH2
+hi def link gularenAdmonWarning   DiagnosticWarn
+hi def link gularenAdmonDanger    DiagnosticError
+hi def link gularenAdmonSeeAlso   htmlH3
 
 let b:current_syntax = "gularen"
