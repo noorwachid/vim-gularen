@@ -7,6 +7,12 @@ if exists("b:current_syntax")
   finish
 endif
 
+if !exists('g:gularen_minline')
+  let g:gularen_minline = 50
+endif
+
+execute 'syn sync minlines=' . g:gularen_minline
+
 " Inlines
 syn match gularenComment "\~.*$" 
 
@@ -51,10 +57,10 @@ syn match gularenCheckListMarkerCancelled "x" contained containedin=gularenCheck
 syn match gularenCheckListMarker "\v(^\t*\[[vx ]\] )"
 syn match gularenCheckList "\v(^\t*\[[vx ]\] )@<=.*$" contains=@gularenInline
 
-syn match gularenCodeMarker "^\t*-\{3,} [a-z-]\+$" contained
+syn match gularenCodeMarker "^\t*-\{3,} [a-z0-9-]\+$" contained
 syn match gularenCodeMarker "^\t*-\{3,}$"          contained
 syn region gularenCode start="^\t*\z(-\{3,}\)\n.*$" end="^\s*\z1\ze\s*$" keepend contains=gularenCodeMarker
-syn region gularenCode start="^\t*\z(-\{3,}\) [a-z-]\+\n.*$" end="^\s*\z1\ze\s*$" keepend contains=gularenCodeMarker
+syn region gularenCode start="^\t*\z(-\{3,}\) [a-z0-9-]\+\n.*$" end="^\s*\z1\ze\s*$" keepend contains=gularenCodeMarker
 
 syn match gularenPipe "|" contained
 syn match gularenPipeConnector "---\+" contained
@@ -66,6 +72,36 @@ syn match gularenTable "^\t*|-.*-|$" contains=@gularenInline,gularenPipe,gularen
 syn match gularenTable "^\t*|-.*:|$" contains=@gularenInline,gularenPipe,gularenPipeConnector
 syn match gularenTable "^\t*|:.*:|$" contains=@gularenInline,gularenPipe,gularenPipeConnector
 syn match gularenTable "^\t*|:.*-|$" contains=@gularenInline,gularenPipe,gularenPipeConnector
+
+" Code blocks
+" Credit to TPope
+if !exists('g:gularen_codeblocks')
+	let g:gularen_codeblocks = []
+endif
+let s:syntax_loaded = {}
+for s:lang in map(copy(g:gularen_codeblocks),'matchstr(v:val,"[^=][a-z0-9-]*$")')
+	if has_key(s:syntax_loaded, s:lang)
+		continue
+	endif
+
+	syn case match
+	exe 'syn include @gularen_codeblock_'.tr(s:lang,'-','_').' syntax/'.s:lang.'.vim'
+	unlet! b:current_syntax
+	let s:syntax_loaded[s:lang] = 1
+endfor
+
+let s:syntax_linked = {}
+for s:lang in g:gularen_codeblocks
+	if has_key(s:syntax_linked, s:lang)
+		continue
+	endif
+
+	let s:otype =  matchstr(s:lang, "^[a-z0-9-]*[^=]")
+	let s:utype =  matchstr(s:lang, "[^=][a-z0-9-]*$")
+	exe 'syn region gularen_codeblock_'.tr(s:utype,'-','_').' start="^\t*\z(-\{3,}\) '.s:otype.'\n.*$" end="^\s*\z1\ze\s*$" keepend contains=@gularen_codeblock_'.tr(s:utype,'-','_')
+	let s:syntax_linked[s:lang] = 1
+endfor
+
 
 " Linkages
 hi def link gularenNumber Number
