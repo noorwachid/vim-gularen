@@ -4,11 +4,11 @@
 " URL:          https://github.com/noorwachid/vim-gularen/
 
 if exists("b:current_syntax")
-  finish
+	finish
 endif
 
 if !exists('g:gularen_minline')
-  let g:gularen_minline = 50
+	let g:gularen_minline = 50
 endif
 
 execute 'syn sync minlines=' . g:gularen_minline
@@ -33,11 +33,11 @@ syn match gularenAdmonSeeAlso   "^\t*<&> "  containedin=ALL
 syn match gularenBreak "<\{1,2}"
 syn match gularenBreak "^\s*\*\*\*$"
 
-syn match gularenSymbol "[a-z0-9-]" contained
-syn match gularenResourceValue "\v(\[)@<=[^\]]+(\])@=" contained
-syn match gularenResourceLabel "\v(\()@<=[^\)]+(\))@=" contained
-syn match gularenResource "[!?]\?\[[^\]]\+\]\(([^)]\+)\)\?" contains=gularenResourceValue,gularenResourceLabel
-syn match gularenFootnoteJumpMarker "\^\[[a-z0-9-]\+\]" contains=gularenSymbol
+syn match gularenSymbol "[a-z0-9-]"                            contained
+syn match gularenResourceValue "\v(\[)@<=[^\]]+(\])@="         contained
+syn match gularenResourceLabel "\v(\()@<=[^\)]+(\))@="         contained
+syn match gularenResource "[!?]\?\[[^\]]\+\]\(([^)]\+)\)\?"    contains=gularenResourceValue,gularenResourceLabel
+syn match gularenFootnoteJumpMarker "\^\[[a-z0-9-]\+\]"        contains=gularenSymbol
 syn match gularenFootnoteDescribeMarker "^\t*=\[[a-z0-9-]\+\]" contains=gularenSymbol
 
 syn cluster gularenInline contains=gularenComment,gularenFSBold,gularenFSItalic,gularenFSMonospace,gularenNumber,gularenBreak,gularenResource,gularenFootnoteJumpMarker
@@ -57,21 +57,21 @@ syn match gularenCheckListMarkerCancelled "x" contained containedin=gularenCheck
 syn match gularenCheckListMarker "\v(^\t*\[[vx ]\] )"
 syn match gularenCheckList "\v(^\t*\[[vx ]\] )@<=.*$" contains=@gularenInline
 
-syn match gularenCodeMarker "^\t*-\{3,} [a-z0-9-]\+$" contained
-syn match gularenCodeMarker "^\t*-\{3,}$"          contained
-syn region gularenCode start="^\t*\z(-\{3,}\)\n.*$" end="^\s*\z1\ze\s*$" keepend contains=gularenCodeMarker
-syn region gularenCode start="^\t*\z(-\{3,}\) [a-z0-9-]\+\n.*$" end="^\s*\z1\ze\s*$" keepend contains=gularenCodeMarker
+syn match gularenCodeMarker "^\t*-\{3,} [a-z0-9-]\+$" contained containedin=@gularen_codeblock_yaml " higher precedence because --- is valid yaml syntax
+syn match gularenCodeMarker "^\t*-\{3,}$"             contained containedin=@gularen_codeblock_yaml
+syn region gularenCode start="^\t*\z(-\{3,}\)$" end="^\t*\z1$"             keepend contains=gularenCodeMarker
+syn region gularenCode start="^\t*\z(-\{3,}\) [a-z0-9-]\+$" end="^\t*\z1$" keepend contains=gularenCodeMarker
 
-syn match gularenPipe "|" contained
-syn match gularenPipeConnector "---\+" contained
-syn match gularenPipeConnector "--\+:" contained
+syn match gularenPipe "|"              contained
+syn match gularenPipeConnector "-\+"   contained
+syn match gularenPipeConnector "-\+:"  contained
 syn match gularenPipeConnector ":-\+:" contained
-syn match gularenPipeConnector ":--\+" contained
-syn match gularenTable "^\t*| .* |$" contains=@gularenInline,gularenPipe,gularenPipeConnector
-syn match gularenTable "^\t*|-.*-|$" contains=@gularenInline,gularenPipe,gularenPipeConnector
-syn match gularenTable "^\t*|-.*:|$" contains=@gularenInline,gularenPipe,gularenPipeConnector
-syn match gularenTable "^\t*|:.*:|$" contains=@gularenInline,gularenPipe,gularenPipeConnector
-syn match gularenTable "^\t*|:.*-|$" contains=@gularenInline,gularenPipe,gularenPipeConnector
+syn match gularenPipeConnector ":-\+"  contained
+syn match gularenTable "^\t*|.*|$"    contains=@gularenInline,gularenPipe,gularenPipeConnector
+syn match gularenTable "^\t*|-\+|$"   contains=@gularenInline,gularenPipe,gularenPipeConnector
+syn match gularenTable "^\t*|-\+:|$"  contains=@gularenInline,gularenPipe,gularenPipeConnector
+syn match gularenTable "^\t*|:-\+:|$" contains=@gularenInline,gularenPipe,gularenPipeConnector
+syn match gularenTable "^\t*|:-\+|$"  contains=@gularenInline,gularenPipe,gularenPipeConnector
 
 " Code blocks
 " Credit to TPope
@@ -96,9 +96,10 @@ for s:lang in g:gularen_codeblocks
 		continue
 	endif
 
-	let s:otype =  matchstr(s:lang, "^[a-z0-9-]*[^=]")
-	let s:utype =  matchstr(s:lang, "[^=][a-z0-9-]*$")
-	exe 'syn region gularen_codeblock_'.tr(s:utype,'-','_').' start="^\t*\z(-\{3,}\) '.s:otype.'\n.*$" end="^\s*\z1\ze\s*$" keepend contains=@gularen_codeblock_'.tr(s:utype,'-','_')
+	let s:otype = matchstr(s:lang, "^[a-z0-9-]*[^=]")
+	let s:utype = matchstr(s:lang, "[^=][a-z0-9-]*$")
+
+	exe 'syn region gularen_codeblock_'.tr(s:utype,'-','_').' start="^\t*\z(-\{3,}\) '.s:otype.'$" end="^\t*\z1$" keepend contains=gularenCodeMarker,@gularen_codeblock_'.tr(s:utype,'-','_')
 	let s:syntax_linked[s:lang] = 1
 endfor
 
@@ -115,12 +116,12 @@ hi def link gularenSubtitle   Delimiter
 
 hi def link gularenBreak DiffRemoved
 
-hi def link gularenListMarker Keyword
-hi def link gularenCheckListMarker Delimiter
-hi def link gularenCheckListMarkerDone DiffAdded
+hi def link gularenListMarker               Keyword
+hi def link gularenCheckListMarker          Delimiter
+hi def link gularenCheckListMarkerDone      DiffAdded
 hi def link gularenCheckListMarkerCancelled DiffRemoved
 
-hi def link gularenPipe Delimiter
+hi def link gularenPipe          Delimiter
 hi def link gularenPipeConnector Delimiter
 
 hi def link gularenFSBold      htmlBold
