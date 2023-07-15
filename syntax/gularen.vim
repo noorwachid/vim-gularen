@@ -23,12 +23,12 @@ syn region gularenFSMonospace start="`" end="`"
 syn match gularenNumber "-*\d\+"
 syn match gularenNumber "-*\d\+\.\d\+"
 
-syn match gularenAdmonNote      "^\t*<\/> " containedin=ALL
-syn match gularenAdmonHint      "^\t*<?> "  containedin=ALL
-syn match gularenAdmonImportant "^\t*<!> "  containedin=ALL
-syn match gularenAdmonWarning   "^\t*<^> "  containedin=ALL
-syn match gularenAdmonDanger    "^\t*<%> "  containedin=ALL
-syn match gularenAdmonSeeAlso   "^\t*<&> "  containedin=ALL
+syn match gularenAdmonNote      "^\t*<\/> " containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonHint      "^\t*<?> "  containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonImportant "^\t*<!> "  containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonWarning   "^\t*<^> "  containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonSeeAlso   "^\t*<&> "  containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonTip       "^\t*<+> "  containedin=ALLBUT,gularenComment,gularenCode
 
 syn match gularenBreak "<\{1,2}"
 syn match gularenBreak "^\s*\*\*\*$"
@@ -140,9 +140,9 @@ hi def link gularenFootnoteDescribeMarker Delimiter
 
 hi def link gularenAdmonNote      htmlH1
 hi def link gularenAdmonHint      DiagnosticHint
-hi def link gularenAdmonImportant htmlH2
+hi def link gularenAdmonImportant DiagnosticError
 hi def link gularenAdmonWarning   DiagnosticWarn
-hi def link gularenAdmonDanger    DiagnosticError
 hi def link gularenAdmonSeeAlso   htmlH3
+hi def link gularenAdmonTip       htmlH2
 
 let b:current_syntax = "gularen"
