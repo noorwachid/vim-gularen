@@ -27,7 +27,7 @@ syn match gularenAdmonNote      "^\t*<\/> " containedin=ALL
 syn match gularenAdmonHint      "^\t*<?> "  containedin=ALL
 syn match gularenAdmonImportant "^\t*<!> "  containedin=ALL
 syn match gularenAdmonWarning   "^\t*<^> "  containedin=ALL
-syn match gularenAdmonDanger    "^\t*<@> "  containedin=ALL
+syn match gularenAdmonDanger    "^\t*<%> "  containedin=ALL
 syn match gularenAdmonSeeAlso   "^\t*<&> "  containedin=ALL
 
 syn match gularenBreak "<\{1,2}"
