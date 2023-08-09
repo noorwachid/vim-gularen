@@ -23,12 +23,14 @@ syn region gularenFSMonospace start="`" end="`"
 syn match gularenNumber "-*\d\+"
 syn match gularenNumber "-*\d\+\.\d\+"
 
-syn match gularenAdmonNote      "^\t*<\/> " containedin=ALLBUT,gularenComment,gularenCode
-syn match gularenAdmonHint      "^\t*<?> "  containedin=ALLBUT,gularenComment,gularenCode
-syn match gularenAdmonImportant "^\t*<!> "  containedin=ALLBUT,gularenComment,gularenCode
-syn match gularenAdmonWarning   "^\t*<^> "  containedin=ALLBUT,gularenComment,gularenCode
-syn match gularenAdmonSeeAlso   "^\t*<&> "  containedin=ALLBUT,gularenComment,gularenCode
-syn match gularenAdmonTip       "^\t*<+> "  containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonNote      "^\t*<note> " containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonHint      "^\t*<hint> "  containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonImportant "^\t*<important> "  containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonWarning   "^\t*<warning> "  containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonSeeAlso   "^\t*<seealso> "  containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonTip       "^\t*<tip> "  containedin=ALLBUT,gularenComment,gularenCode
+
+syn match gularenDateTime  "^\t*<[0-9-: ]\+>"  containedin=ALLBUT,gularenComment,gularenCode
 
 syn match gularenBreak "<\{1,2}"
 syn match gularenBreak "^\s*\*\*\*$"
@@ -144,5 +146,7 @@ hi def link gularenAdmonImportant DiagnosticError
 hi def link gularenAdmonWarning   DiagnosticWarn
 hi def link gularenAdmonSeeAlso   htmlH3
 hi def link gularenAdmonTip       htmlH2
+
+hi def link gularenDateTime   DiagnosticWarn
 
 let b:current_syntax = "gularen"
