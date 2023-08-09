@@ -30,7 +30,7 @@ syn match gularenAdmonWarning   "^\t*<warning> "  containedin=ALLBUT,gularenComm
 syn match gularenAdmonSeeAlso   "^\t*<seealso> "  containedin=ALLBUT,gularenComment,gularenCode
 syn match gularenAdmonTip       "^\t*<tip> "  containedin=ALLBUT,gularenComment,gularenCode
 
-syn match gularenDateTime  "^\t*<[0-9-: ]\+>"  containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenDateTime  "<[0-9-: ]\+>"  containedin=ALLBUT,gularenComment,gularenCode
 
 syn match gularenBreak "<\{1,2}"
 syn match gularenBreak "^\s*\*\*\*$"
