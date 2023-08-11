@@ -15,5 +15,5 @@ Set the sync to larger value
 let g:gularen_minline = 500
 ```
 
-## See also: [Vim Gularen Toolkit](https://github.com/noorwachid/vim-gularen-tk) 
+## See also: [Vim Gularen Toolkit](https://github.com/noorwachid/nvim-gularen) 
 For faster editing experience
