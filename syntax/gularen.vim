@@ -13,6 +13,9 @@ endif
 
 execute 'syn sync minlines=' . g:gularen_minline
 
+runtime! syntax/html.vim
+unlet! b:current_syntax
+
 " Inlines
 syn match gularenComment "\~.*$" 
 
