@@ -45,6 +45,10 @@ syn match gularenResource "[!?]\?\[[^\]]\+\]\(([^)]\+)\)\?"    contains=gularenR
 syn match gularenFootnoteJumpMarker "\^\[[a-z0-9-]\+\]"        contains=gularenSymbol
 syn match gularenFootnoteDescribeMarker "^\t*=\[[a-z0-9-]\+\]" contains=gularenSymbol
 
+syn match gularenInlineCodeValue "\v(\{)@<=[^\}]+(\})@=" contained
+syn match gularenInlineCodeLabel "\v(\()@<=[^\)]+(\))@=" contained
+syn match gularenInlineCode "{[^\]]\+}\(([^)]\+)\)\?"    contains=gularenInlineCodeLabel,gularenInlineCodeValue
+
 syn cluster gularenInline contains=gularenComment,gularenFSBold,gularenFSItalic,gularenFSMonospace,gularenNumber,gularenBreak,gularenResource,gularenFootnoteJumpMarker
 
 " Blocks
@@ -135,6 +139,9 @@ hi def link gularenFSMonospace String
 
 hi def link gularenCode       String
 hi def link gularenCodeMarker Delimiter
+
+hi def link gularenInlineCodeValue String
+hi def link gularenInlineCodeLabel String
 
 hi def link gularenSymbol                 Constant
 hi def link gularenResource               Delimiter
