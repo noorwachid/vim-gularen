@@ -26,16 +26,17 @@ syn region gularenFSMonospace start="`" end="`"
 syn match gularenNumber "-*\d\+"
 syn match gularenNumber "-*\d\+\.\d\+"
 
-syn match gularenAdmonNote      "^\t*<note> " containedin=ALLBUT,gularenComment,gularenCode
-syn match gularenAdmonHint      "^\t*<hint> "  containedin=ALLBUT,gularenComment,gularenCode
-syn match gularenAdmonImportant "^\t*<important> "  containedin=ALLBUT,gularenComment,gularenCode
-syn match gularenAdmonWarning   "^\t*<warning> "  containedin=ALLBUT,gularenComment,gularenCode
-syn match gularenAdmonSeeAlso   "^\t*<seealso> "  containedin=ALLBUT,gularenComment,gularenCode
-syn match gularenAdmonTip       "^\t*<tip> "  containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonNote      "^\t*<Note> "      containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonHint      "^\t*<Hint> "      containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonImportant "^\t*<Important> " containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonWarning   "^\t*<Warning> "   containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonSeeAlso   "^\t*<See also> "  containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmonTip       "^\t*<Tip> "       containedin=ALLBUT,gularenComment,gularenCode
+syn match gularenAdmon          "^\t*<[^>]\+> "    containedin=ALLBUT,gularenComment,gularenCode
 
 syn match gularenDateTime  "<[0-9-: ]\+>"  containedin=ALLBUT,gularenComment,gularenCode
 
-syn match gularenBreak "<\{1,2}"
+syn match gularenBreak "<\{2,3}"
 syn match gularenBreak "^\s*\*\*\*$"
 
 syn match gularenSymbol "[a-z0-9-]"                            contained
@@ -150,12 +151,13 @@ hi def link gularenResourceLabel          String
 hi def link gularenFootnoteJumpMarker     Delimiter
 hi def link gularenFootnoteDescribeMarker Delimiter
 
-hi def link gularenAdmonNote      htmlH1
+hi def link gularenAdmon          DiagnosticHint
 hi def link gularenAdmonHint      DiagnosticHint
 hi def link gularenAdmonImportant DiagnosticError
 hi def link gularenAdmonWarning   DiagnosticWarn
-hi def link gularenAdmonSeeAlso   htmlH3
+hi def link gularenAdmonNote      htmlH1
 hi def link gularenAdmonTip       htmlH2
+hi def link gularenAdmonSeeAlso   htmlH3
 
 hi def link gularenDateTime   DiagnosticWarn
 
